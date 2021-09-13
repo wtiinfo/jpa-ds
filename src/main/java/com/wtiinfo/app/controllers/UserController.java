@@ -36,8 +36,19 @@ public class UserController {
 	    return ResponseEntity.ok(userRepository.searchBySalary(minSalary, maxSalary, pageable));
 	}
 	
+	@GetMapping(value = "/search-salary-queryMethod")
+	public ResponseEntity<Page<User>> searchBySalaryQueryMethod(@RequestParam(defaultValue = "0") Double minSalary, @RequestParam(defaultValue = "1000000000000") Double maxSalary, Pageable pageable) {
+	    return ResponseEntity.ok(userRepository.findBySalaryBetween(minSalary, maxSalary, pageable));
+	}
+	
 	@GetMapping(value = "/search-name")
 	public ResponseEntity<Page<User>> searchByName(@RequestParam(defaultValue = "") String name, Pageable pageable) {
 	    return ResponseEntity.ok(userRepository.searchByName(name, pageable));
 	}
+	
+	@GetMapping(value = "/search-name-queryMethod")
+	public ResponseEntity<Page<User>> searchByNameQueryMethod(@RequestParam(defaultValue = "") String name, Pageable pageable) {
+	    return ResponseEntity.ok(userRepository.findByNameContainingIgnoreCase(name, pageable));
+	}
+	
 }
